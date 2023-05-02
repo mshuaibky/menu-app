@@ -1,5 +1,6 @@
 const User = require('../model/user')
 const bcrypt = require('bcrypt');
+const session = require("express-session")
 
 
 exports.signUp = (req, res) => {
@@ -63,7 +64,8 @@ exports.loginDetails = async (req, res) => {
                 })
                 console.log(loggedIn, 'logged in detatils');
                 if (loggedIn) {
-                  
+                    console.log(user._id,'id');
+                    req.session.userId = user;
                     res.status(200).send({ msg: loggedIn })
                 } else {
                     res.status(500).send({ msg: 'something went wrong' })
@@ -77,5 +79,16 @@ exports.loginDetails = async (req, res) => {
         }
     } catch (error) {
         res.send({ msg: error })
+    }
+}
+//logout user
+
+exports.userLogout=(req,res)=>{
+    try {
+        console.log(req.session,"::::::::::")
+        req.session.userId=null
+        res.status(200).send({msg:'logout success'})
+    } catch (error) {
+        res.send(error)
     }
 }

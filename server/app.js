@@ -5,6 +5,8 @@ const cors=require('cors')
 const morgan=require('morgan')
 const mongoose=require('mongoose')
 const cookieParser=require('cookie-parser')
+const session=require('express-session')
+
 
 //Routes
 const userRoutes=require('./routes/user')
@@ -28,8 +30,13 @@ mongoose.connect(process.env.DATABASE).then(()=>{
 }).catch((error)=>{
     console.log(error.message);
 })
-
-
+//session
+app.use(session({
+    secret: "SESSION_SECRET",
+    resave: false,
+    saveUninitialized: true
+  }));
+  
 app.use('/',userRoutes)
 app.use('/admin',adminRoutes)
 

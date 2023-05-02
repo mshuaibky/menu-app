@@ -1,6 +1,15 @@
 import React from 'react'
+import {userLogout} from '../helpers/user-helpers'
+import { useNavigate } from 'react-router-dom'
 
 function Navbar() {
+  const navigate=useNavigate()
+  const handleLogout=async()=>{
+   let logout=await userLogout()
+   if(logout){
+     navigate('/user/login')
+   }
+  }
   return (
     <div className="py-10">
       <nav className="relative px-8 py-4 flex justify-between items-center border-y border-gray-400 dark:border-gray-700">
@@ -143,14 +152,7 @@ function Navbar() {
           </li>
         </ul>
         <div className="space-x-2 hidden lg:block">
-          <span className="relative inline-block">
-            <img
-              className="h-10 w-10 rounded-full"
-              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
-              alt="John Doe"
-            />
-            <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-600 ring-2 ring-white"></span>
-          </span>
+        <button onClick={handleLogout} className="rounded-md bg-indigo-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white hover:bg-indigo-500">Logout</button>
         </div>
       </nav>
     </div>
